@@ -1,5 +1,5 @@
-Variable Integer Array
-======================
+Compact Collections 
+===================
 
 Source code will be released in the near future.  
 
