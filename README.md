@@ -13,5 +13,4 @@ On average they use 4-5 times less memory than the implementations from *java.ut
 - **IntPairHashMap**: maps *Integer x Integer* -> *Integer*.
 - **IntPairObjectHashMap**: maps *Integer x Integer* -> *Object*.
 - **SparseBitSet**: a sparse representation of a bit array, provides fast query at random positions.
-- **VariableIntArray**: compact variable-length integer array (1/4 bytes) using [Group Variant Encoding](http://www.stanford.edu/class/cs276/Jeff-Dean-compression-slides.pdf) and [Delta Encoding](http://en.wikipedia.org/wiki/Delta_encoding),  
-  provides fast query at random positions and support for caching and efficient value updating.
+- **VariableIntArray**: compact variable-length integer array (1/4 bytes) using [Group Variant Encoding](http://www.stanford.edu/class/cs276/Jeff-Dean-compression-slides.pdf) and [Delta Encoding](http://en.wikipedia.org/wiki/Delta_encoding), provides fast query at random positions and support for caching and efficient value updating.
