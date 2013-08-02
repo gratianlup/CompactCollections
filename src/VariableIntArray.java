@@ -1,5 +1,3 @@
-import de.wolterskluwer.automatonfinder.SectionStreamReader;
-import de.wolterskluwer.automatonfinder.SectionStreamWriter;
 import java.io.IOException;
 import java.util.AbstractList;
 import java.util.List;
@@ -612,30 +610,5 @@ public class VariableIntArray extends AbstractList<Integer> {
         flush();
         data = compactArray(data, dataOffset);
         return this;
-    }
-
-    public static void serializeArray(VariableIntArray array,
-                                      SectionStreamWriter writer) throws IOException {
-        array.flush();
-        writer.writeInt4Array(array.sectionOffset);
-        writer.writeInt4Array(array.sectionValue);
-        writer.writeByteArray(array.data);
-        writer.writeInt4(array.dataOffset);
-        writer.writeInt4(array.valueCount);
-    }
-
-    public static VariableIntArray deserializeArray(SectionStreamReader reader) throws IOException {
-        return deserializeArray(reader, null);
-    }
-
-    public static VariableIntArray deserializeArray(SectionStreamReader reader,
-                                                    VariableIntCache valueCache) throws IOException {
-        VariableIntArray array = new VariableIntArray(valueCache);
-        array.sectionOffset = reader.readInt4Array();
-        array.sectionValue = reader.readInt4Array();
-        array.data = reader.readByteArray();
-        array.dataOffset = reader.readInt4();
-        array.valueCount = reader.readInt4();
-        return array;
     }
 }
