@@ -3,7 +3,7 @@ Compact Collections
 
 #### Memory consumption and speed benchmarks will be released in the near future.  
 
-Compact and fast collections for primitive types, implemented in Java.  
+Compact and fast collections optimized for primitive types, implemented in Java.  
 On average they use 4-5 times less memory than the implementations from *java.util*, while being slightly faster to query.
 
 #### Included collections:  
