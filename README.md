@@ -8,7 +8,7 @@ On average they use 4-5 times less memory than the default implementations from 
 
 #### Included collections:  
 
-- **VariableIntArray**: compact variable-length integer array (1/4 bytes) using [Group Variant Encoding](http://www.stanford.edu/class/cs276/Jeff-Dean-compression-slides.pdf) and [Delta Encoding](http://en.wikipedia.org/wiki/Delta_encoding), provides fast query at random positions and support for caching and value updating.
+- **VariableIntArray**: compact variable-length integer array (1/4 bytes) using [Group Variant Encoding](http://www.stanford.edu/class/cs276/Jeff-Dean-compression-slides.pdf) and [Delta Encoding](http://en.wikipedia.org/wiki/Delta_encoding), provides fast query at random positions and support for value updating and caching.
 - **SparseBitSet**: a sparse representation of a bit array, provides fast query at random positions.
 - **IntHashMap**: maps *Integer* -> *Integer*.
 - **IntObjectHashMap**: maps *Integer* -> *Object*.
