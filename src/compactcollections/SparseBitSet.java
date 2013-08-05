@@ -1,45 +1,53 @@
-# Copyright (c) 2013 Gratian Lup. All rights reserved.
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-# * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#
-# * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following
-# disclaimer in the documentation and/or other materials provided
-# with the distribution.
-#
-# * The name "CompactCollections" must not be used to endorse or promote
-# products derived from this software without prior written permission.
-#
-# * Products derived from this software may not be called "CompactCollections" nor
-# may "CompactCollections" appear in their names without prior written
-# permission of the author.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+// Copyright (c) 2013 Gratian Lup. All rights reserved.
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+// * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//
+// * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following
+// disclaimer in the documentation and/or other materials provided
+// with the distribution.
+//
+// * The name "CompactCollections" must not be used to endorse or promote
+// products derived from this software without prior written permission.
+//
+// * Products derived from this software may not be called "CompactCollections" nor
+// may "CompactCollections" appear in their names without prior written
+// permission of the author.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 package compactcollections;
 import java.util.AbstractList;
 
 public class SparseBitSet extends AbstractList<Boolean> {
+    // The number of bits stored associated with a range.
+    // Having less bits in a range might save some space,
+    // but it increases, ultimatelly using more memory in many cases.
     private final static int BITS_PER_RANGE = 64 * 8;
+
+    // The number of bits stored associated with a group of ranges.
+    // Groups are used to speed up random access to bit positions.
+    // Having less bits in a group reduces search time, but increases
+    // memory consumption by requiring more group entries in the hash table.
     private final static int BITS_PER_GROUP = BITS_PER_RANGE * 32;
 
     private static class BitRange {
-        public long[] data;
-        public BitRange next;
-        public int startIndex;
+        public long[] data;    // The bit data associated with the range.
+        public BitRange next;  // The next range in the linked list.
+        public int startIndex; // The index of the first represented bit.
 
         public BitRange(int startIndex) {
             this.data = new long[BITS_PER_RANGE / 64];
@@ -71,8 +79,8 @@ public class SparseBitSet extends AbstractList<Boolean> {
     }
 
 
-    private IntObjectHashMap<BitRange> ranges;
-    private BitRange lastRange;
+    private IntObjectHashMap<BitRange> ranges; // Maps a range to the associated bits.
+    private BitRange lastRange;                // The last accessed range, used for caching.
 
     public SparseBitSet() {
         ranges = new IntObjectHashMap<BitRange>();
@@ -109,6 +117,8 @@ public class SparseBitSet extends AbstractList<Boolean> {
     }
 
     private BitRange findRange(int index) {
+        // In many cases a bit from the last accessed range
+        // is requested and no further search is required.
         if((lastRange != null) && indexInRange(index, lastRange)) {
             return lastRange;
         }
@@ -129,6 +139,8 @@ public class SparseBitSet extends AbstractList<Boolean> {
     }
 
     private BitRange findOrCreateRange(int index, boolean create) {
+        // In many cases a bit from the last accessed range
+        // is requested and no further search is required.
         if((lastRange != null) && indexInRange(index, lastRange)) {
             return lastRange;
         }
