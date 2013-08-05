@@ -14,4 +14,10 @@ On average they use 4-5 times less memory than the default implementations from 
 - **IntObjectHashMap**: maps *Integer* -> *Object*.
 - **IntPairHashMap**: maps *Integer x Integer* -> *Integer*.
 - **IntPairObjectHashMap**: maps *Integer x Integer* -> *Object*.
-
+  
+  
+![VariableIntArray memory](http://www.gratianlup.com/documents/varint_mem.png)  
+![VariableIntArray time](http://www.gratianlup.com/documents/varint_time.png)  
+![IntHashMap memory](http://www.gratianlup.com/documents/inthash_mem.png)  
+![IntHashMap time](http://www.gratianlup.com/documents/inthash_time.png)  
+![IntPairHashMap memory](http://www.gratianlup.com/documents/intpairhash_mem.png)  
