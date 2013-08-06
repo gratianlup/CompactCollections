@@ -12,6 +12,11 @@ On average they use 4-5 times less memory than the default implementations from 
 - **IntObjectHashMap**: maps *Integer* -> *Object*.
 - **IntPairHashMap**: maps *Integer x Integer* -> *Integer*.
 - **IntPairObjectHashMap**: maps *Integer x Integer* -> *Object*.
+- **IntHashMap**: maps *Integer* -> *Integer*, uses variable-integer arrays for the values, uses about 20% less memory.
+- **VariableIntHashMap**: maps *Integer* -> *Integer*, uses variable-length integers for the values.  
+Requires about 20% less memory, but has slower query time.
+- **VariableIntPairHashMap**: maps *Integer x Integer* -> *Integer*, uses variable-length integers for the keys and values.  
+Requires about 35% less memory, but has slower query time.
   
   
 #### Benchmarks  
