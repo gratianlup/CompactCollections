@@ -166,6 +166,9 @@ public class IntObjectHashMap<T> extends AbstractMap<Integer, T> {
     }
 
     private long packValues(int key, int next) {
+        // Placing the key and next values together increases the search speed:
+        // when the key is not the searched one the index of the next location
+        // to check is already loaded into the lowest CPU cache.
         return ((long)next << 32) | ((long)key & 0xFFFFFFFFL);
     }
 
