@@ -13,9 +13,14 @@ On average they use 4-5 times less memory than the default implementations from 
 - **IntPairHashMap**: maps *Integer x Integer* -> *Integer*.
 - **IntPairObjectHashMap**: maps *Integer x Integer* -> *Object*.
   
+#### Benchmarks  
   
+Below are the results of some simple benchmarks (add values to a hash map, then get them and compute their sum). All tests were done with randomly-generated values starting from the same seed value.  
+It can be seen that much less memory is required (at least 4 times less), construction is in general much faster, while querying is much faster for *IntHashMap/IntPairHashMap* and slower for *VariableIntArray*.  
+
+Faster construction time can be explained by the reduced stress on the Garbage Collector (no more *Integer* instances are created). Faster query time is a result of the compact memory layout, which reduces memory traffic and allows more values to be stored in the CPU cache (this is visible especially when accessing consecutive or nearby memory locations).  
+
 ![VariableIntArray memory](http://www.gratianlup.com/documents/varint_mem.png)  
 ![VariableIntArray time](http://www.gratianlup.com/documents/varint_time.png)  
 ![IntHashMap memory](http://www.gratianlup.com/documents/inthash_mem.png)  
-![IntHashMap time](http://www.gratianlup.com/documents/inthash_time.png)  
-![IntPairHashMap memory](http://www.gratianlup.com/documents/intpairhash_mem.png)  
+![IntHashMap time](http://www.gratianlup.com/documents/inthash_time.png)
