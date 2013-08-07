@@ -31,3 +31,10 @@ It can be seen that much less memory is required (at least 4 times less), constr
 Faster construction time can be explained by the reduced stress on the Garbage Collector (no more *Integer* instances are created).  
 
 Faster query time is a result of the compact memory layout, which reduces memory traffic and allows more values to be stored in the CPU cache (this is visible especially when accessing consecutive or nearby memory locations).  
+  
+  
+#### Some limitations
+
+- None of the collections implement the *remove* operation.
+It can be done, but it would not be very efficient, and for my use case it was not required.  
+- *VariableIntArray* does not implement insertions at random positions.
